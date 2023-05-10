@@ -31,35 +31,60 @@
     </script>
 </head>
 <body>
-    <div class="head">
-        <h1>TikTok LIVE Chat Reader</h1>
-        <span class="subTitle">Source: <a href="https://github.com/zerodytrash/TikTok-Chat-Reader">https://github.com/zerodytrash/TikTok-Chat-Reader</a></span>      
-    </div>
+    
 
-    <div>
-        A chat reader for <a href="https://www.tiktok.com/live">TikTok LIVE</a> utilizing <a href="https://github.com/zerodytrash/TikTok-Live-Connector">TikTok-Live-Connector</a> and <a href="https://socket.io/">Socket.IO</a> to forward the data to the client. More Tools available at <a href="https://tikfinity.zerody.one/" target="_blank">TikFinity</a>.
-    </div>
-
-    <div class="inputFields">
-        <p>Enter the <b>@username</b> of a user who is currently live:</p>
+    <div class="inputFields" id="connectionInterface">
+    
         <input type="text" id="uniqueIdInput">
         <input type="button" id="connectButton" value="connect">
         <a href="#" onclick="generateOverlay()">Generate Overlay URL</a>
     </div>
 
     <table class="splitstatetable">
-        <tr>
+        <tr id=roomStateTblRow>
             <td>
                 <pre id="stateText"></pre>
             </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
             <td>
                 <div id="roomStats"></div>
             </td>
         </tr>
     </table>
 
+<h2><center>Who is the STAR?</center></h2>
+
+    <div>
+        <center><table style="table-layout: fixed; width: 50%;">
+            <tr>
+                <td style="border:solid black 1px; border-radius:6px;">
+                    <center><b>Cristiano Ronaldo</b></center><br/><center><img src="cristiano_ronaldo.jpg" width="180" height="180"></center>
+                    <b id="teamOneScorePara" style="font-size: 60px;"><center><img hidden id="teamOneMedal" src="first.jpg" width="100" height="100">0</center></b><br/>
+                    <center><img src="giftimg/rose.png" width="60" height="60"> <img src="giftimg/mic.png" width="60" height="60"><br/></center>
+                    <center><img src="giftimg/mirror.png" width="60" height="60"> <img src="giftimg/confetti.png" width="60" height="60"><br/></center>
+                    <center><img src="giftimg/goggles.png" width="60" height="60"> <img src="giftimg/dancing_cactus.png" width="60" height="60"><br/></center>
+                    <center><img src="giftimg/gold_mine.png" width="60" height="60"> <img src="giftimg/make_up_box.png" width="60" height="60"><br/></center>
+                    <center><img src="giftimg/dancing_adam.png" width="60" height="60"> <img src="giftimg/adams_dream.png" width="60" height="60"><br/></center>
+                </td>
+                <td style="border:solid black 1px; border-radius:6px;">
+                    <center><b>Lionel Messi</b></center><br/><center><center><img src="lionel_messi.jpg" width="180" height="180"></center>
+                    <b id="teamTwoScorePara" style="font-size: 60px;"><center><img hidden id="teamTwoMedal" src="first.jpg" width="100" height="100">0</center></b><br/>
+                    <center><img src="giftimg/ice_cream_cone.png" width="60" height="60"> <img src="giftimg/finger_heart.png" width="60" height="60"><br/></center>
+                    <center><img src="giftimg/doughnut.png" width="60" height="60"> <img src="giftimg/hand_hearts.png" width="60" height="60"><br/></center>
+                    <center><img src="giftimg/sunglasses.png" width="60" height="60"> <img src="giftimg/boxing_gloves.png" width="60" height="60"><br/></center>
+                    <center><img src="giftimg/watermelon_love.png" width="60" height="60"> <img src="giftimg/cooper_flies_home.png" width="60" height="60"><br/></center>
+                    <center><img src="giftimg/unicorn_fantasy.png" width="60" height="60"> <img src="giftimg/phoenix.png" width="60" height="60"><br/></center>
+                </td>
+            </tr>
+        </table></center>
+    </div>
+
     <table class="splitchattable">
-        <tr>
+        <!--<tr>
             <td>
                 <div class="chatcontainer">
                     <h3 class="containerheader">Chats</h3>
@@ -68,6 +93,14 @@
             <td>
                 <div class="giftcontainer">
                     <h3 class="containerheader">Gifts</h3>
+                </div>
+            </td>
+        </tr>-->
+        <tr>
+            <td>
+                <div class="game">
+                    <h3 class="Game Data">Gifts</h3>
+                    <div item_custom_type="gamedata"></div>
                 </div>
             </td>
         </tr>

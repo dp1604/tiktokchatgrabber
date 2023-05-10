@@ -7,6 +7,9 @@ let viewerCount = 0;
 let likeCount = 0;
 let diamondsCount = 0;
 
+var teamOneScore = 0;
+var teamTwoScore = 0;
+
 // These settings are defined by obs.html
 if (!window.settings) window.settings = {};
 
@@ -37,6 +40,10 @@ function connect() {
             likeCount = 0;
             diamondsCount = 0;
             updateRoomStats();
+            var conInterface = document.getElementById("connectionInterface");
+            conInterface.style.display = "none";
+            var roomStateTblRow = document.getElementById("roomStateTblRow");
+            roomStateTblRow.style.display = "none";
 
         }).catch(errorMessage => {
             $('#stateText').text(errorMessage);
@@ -99,10 +106,76 @@ function addChatItem(color, data, text, summarize) {
     }, 400);
 }
 
+function countDiamonds(data) {
+    if (data.giftType === 1 && !data.repeatEnd) {
+        // Streak in progress => show only temporary
+        return 0;
+    } else {
+        // Streak ended or non-streakable gift => process the gift with final repeat_count
+        return (data.repeatCount * data.diamondCount);
+    }
+}
+
 /**
  * Add a new gift to the gift container
  */
 function addGiftItem(data) {
+    let giftStreakId = data.userId.toString() + '_' + data.giftId;
+
+    switch (data.giftId) {
+    case 5655:
+    case 5650:
+    case 6070:
+    case 5585:
+    case 7121:
+    case 8066:
+    case 5734:
+    case 6532:
+    case 5587:
+    case 6033:
+    case 7468:
+    case 7400:
+        teamOneScore += countDiamonds(data);
+        break;
+
+    case 5827:
+    case 5487:
+    case 5879:
+    case 5660:
+    case 5509:
+    case 6007:
+    case 6781:
+    case 6862:
+    case 5475:
+    case 7319:
+        teamTwoScore += countDiamonds(data);
+    break;
+    default:
+    console.log('Unknown Id');
+}
+
+let gameDataContainer = $('.game');
+let currentGameData = gameDataContainer.find(`[item_custom_type='gamedata']`);
+let gameDataHtml = `<div item_custom_type="gamedata">
+                        Team One: ${teamOneScore}</br>
+                        Team Two: ${teamTwoScore}</br>
+                    </div>`
+currentGameData.replaceWith(gameDataHtml);
+
+var firstScoreElement = document.getElementById("teamOneScorePara");
+var secondScoreElement = document.getElementById("teamTwoScorePara");
+
+if(teamOneScore > teamTwoScore) {
+    firstScoreElement.innerHTML = `<center style="color: red;"><img id="teamOneMedal" src="first.jpg" width="100" height="100">${teamOneScore}</center>`;
+    secondScoreElement.innerHTML = `<center><img hidden id="teamOneMedal" src="first.jpg" width="100" height="100">${teamTwoScore}</center>`;
+} else if(teamOneScore < teamTwoScore) {
+    firstScoreElement.innerHTML = `<center><img hidden id="teamOneMedal" src="first.jpg" width="100" height="100">${teamOneScore}</center>`;
+    secondScoreElement.innerHTML = `<center style="color: red;"><img id="teamOneMedal" src="first.jpg" width="100" height="100">${teamTwoScore}</center>`;
+} else {
+    firstScoreElement.innerHTML = `<center><img hidden id="teamOneMedal" src="first.jpg" width="100" height="100">${teamOneScore}</center>`;
+    secondScoreElement.innerHTML = `<center><img hidden id="teamOneMedal" src="first.jpg" width="100" height="100">${teamTwoScore}</center>`;
+}
+
     let container = location.href.includes('obs.html') ? $('.eventcontainer') : $('.giftcontainer');
 
     if (container.find('div').length > 200) {
